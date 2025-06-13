@@ -1,52 +1,53 @@
-# Retail Sales Analysis SQL Project
+# Projek Retail Sales
 
-## Project Overview
+## Gambaran Umum Projek
 
-**Project Title**: Retail Sales Analysis  
-**Level**: Beginner  
-**Database**: `p1_retail_db`
+**Nama Projek**: Analisis Retail Sales   
+**Level**: Pemula  
+**Database**: `latihan_sql`
 
-This project is designed to demonstrate SQL skills and techniques typically used by data analysts to explore, clean, and analyze retail sales data. The project involves setting up a retail sales database, performing exploratory data analysis (EDA), and answering specific business questions through SQL queries. This project is ideal for those who are starting their journey in data analysis and want to build a solid foundation in SQL.
+Projek ini dirancang untuk menunjukkan keterampilan dan teknik SQL yang umumnya digunakan oleh seorang Data Analyst dalam data cleaning, data exploration, dan analisa data retail sales. Projek ini melibatkan pembuatan basis data penjualan, melakukan analisis dan eksplorasi (Exploratory Data Analysis), dan menjawab pertanyaan bisnis melalui query SQL. Projek ini ideal untuk pemuladalam membangun dasar yang kuat dalam SQL. 
 
-## Objectives
+## Tujuan
 
-1. **Set up a retail sales database**: Create and populate a retail sales database with the provided sales data.
-2. **Data Cleaning**: Identify and remove any records with missing or null values.
-3. **Exploratory Data Analysis (EDA)**: Perform basic exploratory data analysis to understand the dataset.
-4. **Business Analysis**: Use SQL to answer specific business questions and derive insights from the sales data.
+1. **Menyiapkan Database Ritel Sales**: Membuat dan mengisi database Ritel Sales dengan data penjualan yang telah disiapkan.
+2. **Data Cleaning**: Mengidentifikasi dan menghapus data yang kosong (Null Values)
+3. **Exploratory Data Analysis (EDA)**: Melakukan eksplorasi data untuk memahami kumpulan data.
+4. **Business Analysis**: Menggunakan SQL untuk menjawab pertanyaan bisnis dan mendapatkan wawasan dari data penjualan.
 
-## Project Structure
+## Struktur Projek
 
-### 1. Database Setup
+### 1. Menyiapkan Database
 
-- **Database Creation**: The project starts by creating a database named `p1_retail_db`.
-- **Table Creation**: A table named `retail_sales` is created to store the sales data. The table structure includes columns for transaction ID, sale date, sale time, customer ID, gender, age, product category, quantity sold, price per unit, cost of goods sold (COGS), and total sale amount.
+- **Membuat Database**: Projek ini diawali dengan pembuatan database `latihan_sql`.
+- **Membuat Tabel**: Dibuat tabel bernama `retail_sales` untuk menyimpan data penjualan. Struktur tabel mencakup kolom transactions_id,	sale_date,	sale_time,	customer_id, gender, age, category,	quantiy, price_per_unit,	cogs, dan total_sale.
 
 ```sql
-CREATE DATABASE p1_retail_db;
+CREATE DATABASE latihan;
 
-CREATE TABLE retail_sales
+create table retail_sales 
 (
-    transactions_id INT PRIMARY KEY,
-    sale_date DATE,	
-    sale_time TIME,
-    customer_id INT,	
-    gender VARCHAR(10),
-    age INT,
-    category VARCHAR(35),
-    quantity INT,
-    price_per_unit FLOAT,	
-    cogs FLOAT,
-    total_sale FLOAT
+	transactions_id	int primary key,
+	sale_date date,
+	sale_time time,
+	customer_id	int,
+	gender varchar(15),
+	age	int,
+	category varchar(15),	
+	quantiy int,
+	price_per_unit float,
+	cogsf float,
+	total_sale float
 );
+
 ```
 
-### 2. Data Exploration & Cleaning
+### 2. Data Exploration & Data Cleaning
 
-- **Record Count**: Determine the total number of records in the dataset.
-- **Customer Count**: Find out how many unique customers are in the dataset.
-- **Category Count**: Identify all unique product categories in the dataset.
-- **Null Value Check**: Check for any null values in the dataset and delete records with missing data.
+- **Record Count**: Mengetahui jumlah data yang terekam dalam dataset.
+- **Customer Count**: Mengetahui berapa customer unik yang ada di dalam dataset.
+- **Category Count**: MEngidentifikasi semua kategori produk di dalam dataset.
+- **Null Value Check**: Mengecek semua null values yang ada di dalam dataset dan menhapus semua data yang tidak lengkap.
 
 ```sql
 SELECT COUNT(*) FROM retail_sales;
@@ -66,18 +67,18 @@ WHERE
     quantity IS NULL OR price_per_unit IS NULL OR cogs IS NULL;
 ```
 
-### 3. Data Analysis & Findings
+### 3. Data Analisis
 
-The following SQL queries were developed to answer specific business questions:
+Query yang dibuat di bawah ini adalah untuk menjawab pertanyaan basic bisnis:
 
-1. **Write a SQL query to retrieve all columns for sales made on '2022-11-05**:
+1. **P1. menampilkan semua kolom sales dari tanggal '2022-11-05'**:
 ```sql
 SELECT *
 FROM retail_sales
 WHERE sale_date = '2022-11-05';
 ```
 
-2. **Write a SQL query to retrieve all transactions where the category is 'Clothing' and the quantity sold is more than 4 in the month of Nov-2022**:
+2. **P2. menampilkan semua transaksi dengan category clothing dan quantity yang terjual lebih dari 10 di november 2022**:
 ```sql
 SELECT 
   *
@@ -90,7 +91,7 @@ WHERE
     quantity >= 4
 ```
 
-3. **Write a SQL query to calculate the total sales (total_sale) for each category.**:
+3. **P3. menghitung total sales per masing-masing kategori**:
 ```sql
 SELECT 
     category,
@@ -100,7 +101,7 @@ FROM retail_sales
 GROUP BY 1
 ```
 
-4. **Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category.**:
+4. **P4. menemukan rata-rata usia customer yang membeli item beauty**:
 ```sql
 SELECT
     ROUND(AVG(age), 2) as avg_age
@@ -108,120 +109,95 @@ FROM retail_sales
 WHERE category = 'Beauty'
 ```
 
-5. **Write a SQL query to find all transactions where the total_sale is greater than 1000.**:
+5. **P5. menampilkan semua transaksi yang memiliki total_sales lebih dari 1000**:
 ```sql
 SELECT * FROM retail_sales
 WHERE total_sale > 1000
 ```
 
-6. **Write a SQL query to find the total number of transactions (transaction_id) made by each gender in each category.**:
+6. **P6. total jumlah transaksi tiap gender per kategori**:
 ```sql
-SELECT 
-    category,
-    gender,
-    COUNT(*) as total_trans
-FROM retail_sales
-GROUP 
-    BY 
-    category,
-    gender
-ORDER BY 1
+select 
+	category,
+	gender,
+	count(transactions_id)
+from retail_sales
+group by 1, 2
+order by 2
 ```
 
-7. **Write a SQL query to calculate the average sale for each month. Find out best selling month in each year**:
+7. **P7. menampilkan rata-rata sale tiap bulannya dan menemukan best selling month in year**:
 ```sql
-SELECT 
-       year,
-       month,
-    avg_sale
-FROM 
-(    
-SELECT 
-    EXTRACT(YEAR FROM sale_date) as year,
-    EXTRACT(MONTH FROM sale_date) as month,
-    AVG(total_sale) as avg_sale,
-    RANK() OVER(PARTITION BY EXTRACT(YEAR FROM sale_date) ORDER BY AVG(total_sale) DESC) as rank
-FROM retail_sales
-GROUP BY 1, 2
-) as t1
-WHERE rank = 1
-```
-
-8. **Write a SQL query to find the top 5 customers based on the highest total sales **:
-```sql
-SELECT 
-    customer_id,
-    SUM(total_sale) as total_sales
-FROM retail_sales
-GROUP BY 1
-ORDER BY 2 DESC
-LIMIT 5
-```
-
-9. **Write a SQL query to find the number of unique customers who purchased items from each category.**:
-```sql
-SELECT 
-    category,    
-    COUNT(DISTINCT customer_id) as cnt_unique_cs
-FROM retail_sales
-GROUP BY category
-```
-
-10. **Write a SQL query to create each shift and number of orders (Example Morning <12, Afternoon Between 12 & 17, Evening >17)**:
-```sql
-WITH hourly_sale
-AS
+select
+	tahun, 
+	bulan,
+	avg_sale
+from 
 (
-SELECT *,
-    CASE
-        WHEN EXTRACT(HOUR FROM sale_time) < 12 THEN 'Morning'
-        WHEN EXTRACT(HOUR FROM sale_time) BETWEEN 12 AND 17 THEN 'Afternoon'
-        ELSE 'Evening'
-    END as shift
-FROM retail_sales
+	select 
+	extract(year from sale_date) as tahun,
+	extract(month from sale_date) as bulan,
+	avg(total_sales) avg_sale,
+	rank() over(partition by extract(year from sale_date) order by avg(total_sales) desc) as rank
+from retail_sales
+group by 1, 2
 )
-SELECT 
-    shift,
-    COUNT(*) as total_orders    
-FROM hourly_sale
-GROUP BY shift
+where rank = 1
+```
+
+8. **P8. mencari top 5 customer berdasarkan total_sales tertinggi**:
+```sql
+select 
+	customer_id,
+	sum(total_sales) as tot_sale
+from retail_sales
+group by 1 
+order by 2 desc
+limit 5
+```
+
+9. **P9. menemukan jml customer_id berdasarkan masing-masing kategori**:
+```sql
+select 
+	category,
+	count(distinct customer_id) as jml_customer
+from retail_sales
+group by 1 
+```
+
+10. **P10. menemukan shift pada pembelian dan jml ordernya ( morning <= 12, afternoon between 12 & 17, evening >17)**:
+```sql
+with hourly as
+(
+select 
+	*,
+	case 
+		when extract(hour from sale_time) < 12 then 'Morning'
+		when extract(hour from sale_time) between 12 and 17 then 'Afternoon'
+		else 'evening'
+	end as shift
+from retail_sales
+)
+select
+	shift,
+	count(*) as tot_order
+from hourly
+group by 1
 ```
 
 ## Findings
 
-- **Customer Demographics**: The dataset includes customers from various age groups, with sales distributed across different categories such as Clothing and Beauty.
-- **High-Value Transactions**: Several transactions had a total sale amount greater than 1000, indicating premium purchases.
-- **Sales Trends**: Monthly analysis shows variations in sales, helping identify peak seasons.
-- **Customer Insights**: The analysis identifies the top-spending customers and the most popular product categories.
+- **Demografi Customer**: Dataset ini mencakup pelanggan dari berbagai kelompok usia, dengan penjualan yang didistribusikan di berbagai kategori seperti Pakaian dan Kecantikan.
+- **Transaksi Nilai Tinggi**: Beberapa transaksi memiliki jumlah total penjualan lebih besar dari 1000, yang mengindikasikan pembelian premium.
+- **Tren Penjualan**: Analisis bulanan menunjukkan variasi dalam penjualan, membantu mengidentifikasi musim puncak.
+- **Insights Customer**: Analisis ini mengidentifikasi pelanggan dengan pembelanjaan tertinggi dan kategori produk terpopuler.
 
 ## Reports
 
-- **Sales Summary**: A detailed report summarizing total sales, customer demographics, and category performance.
-- **Trend Analysis**: Insights into sales trends across different months and shifts.
-- **Customer Insights**: Reports on top customers and unique customer counts per category.
+- **Rangkuman Sales**:Laporan terperinci yang merangkum total penjualan, demografi pelanggan, dan kinerja kategori.
+- **Analisis Tren**: Wawasan tentang tren penjualan di berbagai bulan dan shift.
+- **Insights Customer**: Laporan tentang pelanggan teratas dan jumlah pelanggan unik per kategori.
 
-## Conclusion
+## Kesimpulan
 
-This project serves as a comprehensive introduction to SQL for data analysts, covering database setup, data cleaning, exploratory data analysis, and business-driven SQL queries. The findings from this project can help drive business decisions by understanding sales patterns, customer behavior, and product performance.
-
-## How to Use
-
-1. **Clone the Repository**: Clone this project repository from GitHub.
-2. **Set Up the Database**: Run the SQL scripts provided in the `database_setup.sql` file to create and populate the database.
-3. **Run the Queries**: Use the SQL queries provided in the `analysis_queries.sql` file to perform your analysis.
-4. **Explore and Modify**: Feel free to modify the queries to explore different aspects of the dataset or answer additional business questions.
-
-## Author - Zero Analyst
-
-This project is part of my portfolio, showcasing the SQL skills essential for data analyst roles. If you have any questions, feedback, or would like to collaborate, feel free to get in touch!
-
-### Stay Updated and Join the Community
-
-For more content on SQL, data analysis, and other data-related topics, make sure to follow me on social media and join our community:
-
-- **YouTube**: [Subscribe to my channel for tutorials and insights](https://www.youtube.com/@zero_analyst)
-- **Instagram**: [Follow me for daily tips and updates](https://www.instagram.com/zero_analyst/)
-- **LinkedIn**: [Connect with me professionally](https://www.linkedin.com/in/najirr)
-- **Discord**: [Join our community to learn and grow together](https://discord.gg/36h5f2Z5PK)
-
-Thank you for your support, and I look forward to connecting with you!
+Proyek ini berfungsi sebagai pengenalan komprehensif terhadap SQL untuk analis data, yang mencakup penyiapan basis data, data cleaning, analisis data eksploratif, dan query SQL yang menjawab pertanyaan bisnis. Temuan dari proyek ini dapat membantu mendorong keputusan bisnis dengan memahami pola penjualan, perilaku pelanggan, dan kinerja produk.
